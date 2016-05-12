@@ -8,6 +8,10 @@ var posX = 0;
 var posXexp_ = 205;
 var posXnivobj = 210;
 
+//Resolution de la HitBox
+var orcX = 120;
+var orcY = 120;
+
 //Initialisation variables
 var click = 0; //compteur de clic
 var exp_ = 0; //expérience du joueur
@@ -26,10 +30,25 @@ var guiImage = new Image();
 guiImage.src = 'img/gui.png';
 var orcSprite = new Image();
 orcSprite.src = 'img/orc_walk.gif';
+var vietSprite = new Image();
+vietSprite.src = 'img/viet_idle.png';
+var osSprite = new Image();
+osSprite.src = 'img/os.png';
+var fourchetteSprite = new Image();
+fourchetteSprite.src = 'img/fourchette.png';
+var scieSprite = new Image();
+scieSprite.src = 'img/scie.png';
+var hacheSprite = new Image();
+hacheSprite.src = 'img/hache.png';
+var troncoSprite = new Image();
+troncoSprite.src = 'img/tronco.gif';
+var flingueSprite = new Image();
+flingueSprite.src = 'img/flingue.png';
+
+var sproutch = new Audio('sound/sproutch.wav');
+var buy = new Audio('sound/buy.wav');
 
 var requestAnimId;
-
-
 
 // Armes
 var arme = function (prix, image, puissance){
@@ -87,7 +106,7 @@ function play(sound){
     sound.currentTime = 0;
 };
 
-function fillCanvas(click, exp_, niveau, nivobj, organes, modarme){
+/*function fillCanvas(click, exp_, niveau, nivobj, organes, modarme){
 
   if (exp_ % Math.pow(10, exponent) == 0) {
     // quand le reste de la division de exp_ par un exponentiel de 10 (ex:10,100,1000,10000, ...) est égal à zéro:
@@ -114,11 +133,19 @@ function fillCanvas(click, exp_, niveau, nivobj, organes, modarme){
   organesCanvasContext.clearRect( 0, 0 , resX, resY);
   organesCanvasContext.fillText("Organes :",175,105);
   organesCanvasContext.fillText(organes,225,105);
-};
+};*/
 
 function OrcClick(e) {
+
+  //Fonction de récupération de la position de la souris
+    /*var mouseX = e.clientX;
+    var mouseY = e.clientY;
+    console.log(mouseX , mouseY);
+    //HibBox grâce à la position de la souris.
+    if (mouseX > 400 && mouseX < 400 + 200 && mouseY > 270 && mouseY < 270 + 210){*/
     click ++; // ajoute +1 à chaque clic sur l'orc
     organes += (niveau + modarme); // augmente la monnaie du joueur
+
     
     if (click % 2 == 0){
       // ajoute +1 à exp_ tous les 2 clics
@@ -132,8 +159,8 @@ function OrcClick(e) {
       niveau ++; // ajoute +1 au niveau
       nivobj *= 2; // double l'expérience requise pour passer le prochain niveau
     };
-
     fillCanvas(click, exp_, niveau, nivobj, organes, modarme); // envoie à la fonction fillCanvas les nouvelles valeurs
+  /*};*/
 };
 
 
@@ -141,66 +168,90 @@ function OrcClick(e) {
 //////////////////CANVAS//////////////////
 
 var effacer_canvas = function () {
-        "use strict";
-        prairieCanvasContext.clearRect( 0, 0 , resX, resY);
-        guiCanvasContext.clearRect( 0, 0 , resX, resY);
-        orcCanvasContext.clearRect( 0, 0 , resX, resY);
+  "use strict";
+  prairieCanvasContext.clearRect( 0, 0 , resX, resY);
+  guiCanvasContext.clearRect( 0, 0 , resX, resY);
+  orcCanvasContext.clearRect( 0, 0 , resX, resY);
+  textCanvasContext.clearRect( 0, 0 , resX, resY);
+  vietCanvasContext.clearRect( 0, 0 , resX, resY);
+  //lapinCanvasContext?clearRect( 0, 0, orcX, orcY);
 };
 
 var creerCanvasContext = function (name, width, height, zindex, color) {
-        "use strict";
-        var canvas = window.document.createElement("canvas");
-        canvas.id = name;
-        canvas.style.position = "absolute";
-        canvas.style.left = "18%";
-        if ( color !== undefined ){
+  "use strict";
+  var canvas = window.document.createElement("canvas");
+  canvas.id = name;
+  canvas.style.position = "absolute";
+  canvas.style.left = "18%";
+          if ( color !== undefined ){
                 canvas.style.background = color;
         }
-        canvas.style.zIndex = zindex;
-        canvas.width = width;
-        canvas.height = height;
-        document.body.appendChild(canvas);
-        return canvas.getContext('2d');
+  canvas.style.zIndex = zindex;
+  canvas.width = width;
+  canvas.height = height;
+  document.body.appendChild(canvas);
+  return canvas.getContext('2d');
 };
 
 var init = function () {
   prairieCanvasContext = creerCanvasContext("prairie", resX, resY, 1);
-  
   guiCanvasContext = creerCanvasContext("gui", resX, resY, 2);
-  guiCanvasContext.drawImage(guiImage, 0, 0);
-  
-  orcCanvasContext = creerCanvasContext("orc", resX, resY, 3);
-  orcCanvasContext.drawImage(orcSprite, 50, 80, 64, 64);
+  orcCanvasContext = creerCanvasContext("orc", resX, resY, 3,);
 
-  clickCanvasContext = creerCanvasContext("click", resX, resY, 2);
-  clickCanvasContext.fillText("Clic :",175,60);
-  clickCanvasContext.fillText(click,200,60);
+  //lapinCanvasContext = creerCanvasContext("lapin", orcX, orcY, 4, 'red');
 
-  niveauCanvasContext = creerCanvasContext("niveau", resX, resY, 2);
-  niveauCanvasContext.fillText("Niveau :",175,75);
-  niveauCanvasContext.fillText(niveau,215,75);
-  
-  expCanvasContext = creerCanvasContext("exp", resX, resY, 2);
-  expCanvasContext.fillText("Exp :",175,90);
-  expCanvasContext.fillText(exp_,200,90);
-  expCanvasContext.fillText("/",210,90);
-  expCanvasContext.fillText(nivobj,215,90);
+  vietCanvasContext = creerCanvasContext("viet", resX, resY, 2);
+  osCanvasContext = creerCanvasContext("os", resX, resY, 2);
+  fourchetteCanvasContext = creerCanvasContext("fourchette", resX, resY, 2);
+  scieCanvasContext = creerCanvasContext("scie", resX, resY, 2);
+  hacheCanvasContext = creerCanvasContext("hache", resX, resY, 2);
+  troncoCanvasContext = creerCanvasContext("tronco", resX, resY, 2);
+  flingueCanvasContext = creerCanvasContext("flingue", resX, resY, 2);
+  //Affiche le texte
+  textCanvasContext = creerCanvasContext("text", resX, resY, 2);
+  requestAnimId = window.requestAnimationFrame(main);
+};
+var main = function() {
+  effacer_canvas();
+  //Configure le texte
+  textCanvasContext.font = "15px Ubuntu";
+  textCanvasContext.fillStyle = "#9bbc0f";
 
-  organesCanvasContext = creerCanvasContext("organes", resX, resY, 2);
-  organesCanvasContext.fillText("Organes :",175,105);
-  organesCanvasContext.fillText(organes,225,105);
+  //Première ligne
+  var textX = 5;
+  var textY = 190;
+  textCanvasContext.fillText("Organes : " + organes + "",textX, textY);
+  textX += 50;
+
+  //Deuxième Ligne
+  textY += 20;
+  textX = 5;
+  textCanvasContext.fillText("Niveau : " + niveau + "",textX, textY);
+
+  //Troisième ligne
+  textY += 20;
+  textX = 5;
+  textCanvasContext.fillText("Exp : " + exp_ + "/" + nivobj + "", textX, textY);
 
   guiCanvasContext.drawImage(guiImage, 0, 0);
   prairieCanvasContext.drawImage(prairieImage, posX, 0);
   orcCanvasContext.drawImage(orcSprite, 50, 80, 64, 64);
-  
+  vietCanvasContext.drawImage(vietSprite, 227, 8);
+  osCanvasContext.drawImage(osSprite, 180, 50);
+  fourchetteCanvasContext.drawImage(fourchetteSprite, 225, 50);
+  scieCanvasContext.drawImage(scieSprite, 275, 50);
+  hacheCanvasContext.drawImage(hacheSprite, 175, 95);
+  troncoCanvasContext.drawImage(troncoSprite, 230, 95);
+  flingueCanvasContext.drawImage(flingueSprite, 275, 95);
+
   var ork = document.getElementById("orc");
   ork.addEventListener('click', OrcClick, false);
 
-  requestAnimId = window.requestAnimationFrame(prairie);
-};
+  posX -=0.666;
+  if (posX <= -312) {
+    posX = 0;
+  };  
 
-var prairie = function () {
   posX -=1;
   if (posX == -312) {
     posX = 0;
@@ -208,7 +259,7 @@ var prairie = function () {
   prairieCanvasContext.clearRect( 0, 0 , resX, resY);
   prairieCanvasContext.drawImage(prairieImage, posX, 0);
 
-  requestAnimId = window.requestAnimationFrame(prairie);
+  requestAnimId = window.requestAnimationFrame(main);
 };
 
 window.onload = init;
