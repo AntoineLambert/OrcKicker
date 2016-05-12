@@ -9,8 +9,8 @@ var posXexp_ = 205;
 var posXnivobj = 210;
 
 //Resolution de la HitBox
-var orcX = 120;
-var orcY = 120;
+var orcX = 432;
+var orcY = 451;
 
 //Initialisation variables
 var click = 0; //compteur de clic
@@ -159,7 +159,7 @@ function OrcClick(e) {
       niveau ++; // ajoute +1 au niveau
       nivobj *= 2; // double l'expérience requise pour passer le prochain niveau
     };
-    fillCanvas(click, exp_, niveau, nivobj, organes, modarme); // envoie à la fonction fillCanvas les nouvelles valeurs
+    //fillCanvas(click, exp_, niveau, nivobj, organes, modarme); // envoie à la fonction fillCanvas les nouvelles valeurs
   /*};*/
 };
 
@@ -174,7 +174,7 @@ var effacer_canvas = function () {
   orcCanvasContext.clearRect( 0, 0 , resX, resY);
   textCanvasContext.clearRect( 0, 0 , resX, resY);
   vietCanvasContext.clearRect( 0, 0 , resX, resY);
-  //lapinCanvasContext?clearRect( 0, 0, orcX, orcY);
+  lapinCanvasContext.clearRect( 0, 0, orcX, orcY);
 };
 
 var creerCanvasContext = function (name, width, height, zindex, color) {
@@ -196,9 +196,9 @@ var creerCanvasContext = function (name, width, height, zindex, color) {
 var init = function () {
   prairieCanvasContext = creerCanvasContext("prairie", resX, resY, 1);
   guiCanvasContext = creerCanvasContext("gui", resX, resY, 2);
-  orcCanvasContext = creerCanvasContext("orc", resX, resY, 3,);
+  orcCanvasContext = creerCanvasContext("orc", resX, resY, 3);
 
-  //lapinCanvasContext = creerCanvasContext("lapin", orcX, orcY, 4, 'red');
+  lapinCanvasContext = creerCanvasContext("lapin", orcX, orcY, 4, 'red');
 
   vietCanvasContext = creerCanvasContext("viet", resX, resY, 2);
   osCanvasContext = creerCanvasContext("os", resX, resY, 2);
@@ -244,7 +244,7 @@ var main = function() {
   troncoCanvasContext.drawImage(troncoSprite, 230, 95);
   flingueCanvasContext.drawImage(flingueSprite, 275, 95);
 
-  var ork = document.getElementById("orc");
+  var ork = document.getElementById("lapin");
   ork.addEventListener('click', OrcClick, false);
 
   posX -=0.666;
