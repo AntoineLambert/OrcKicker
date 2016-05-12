@@ -9,8 +9,8 @@ var posXexp_ = 205;
 var posXnivobj = 210;
 
 //Resolution de la HitBox
-var orcX = 432;
-var orcY = 451;
+var orcX = 1;
+var orcY = 1;
 
 //Initialisation variables
 var click = 0; //compteur de clic

@@ -21,8 +21,9 @@ canvas {
 }
 canvas#lapin {
   position:absolute;
-  margin: 0px;
-  padding: 0px;
+  margin: 5%;
+  padding: 6%;
+  top: 10%;
   cursor: url("img/tronco.gif"), auto;
   width: auto;
   height: auto;
