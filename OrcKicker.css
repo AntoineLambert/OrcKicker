@@ -1,0 +1,16 @@
+* {
+  image-rendering: pixelated;
+}
+
+img {
+  display: none;
+}
+
+canvas {
+  position:absolute;
+  margin: 0px;
+  padding: 0px;
+  cursor: url("img/tronco.gif"), auto;
+  width: auto;
+  height: 100%;
+}
