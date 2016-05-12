@@ -9,8 +9,8 @@ var posXexp_ = 205;
 var posXnivobj = 210;
 
 //Resolution de la HitBox
-var orcX = 1;
-var orcY = 1;
+var orcX = 170;
+var orcY = 185;
 
 //Initialisation variables
 var click = 0; //compteur de clic
@@ -198,7 +198,7 @@ var init = function () {
   guiCanvasContext = creerCanvasContext("gui", resX, resY, 2);
   orcCanvasContext = creerCanvasContext("orc", resX, resY, 3);
 
-  lapinCanvasContext = creerCanvasContext("lapin", orcX, orcY, 4, 'red');
+  lapinCanvasContext = creerCanvasContext("lapin", orcX, orcY, 4);
 
   vietCanvasContext = creerCanvasContext("viet", resX, resY, 2);
   osCanvasContext = creerCanvasContext("os", resX, resY, 2);
