@@ -1,0 +1,21 @@
+body {
+  image-rendering: pixelated;
+  margin: 0%;
+  padding: 0%;
+  background-color: #306230;
+}
+
+img {
+  display: none;
+}
+
+
+canvas {
+  position:absolute;
+  margin: 0px;
+  padding: 0px;
+  cursor: url("img/tronco.gif"), auto;
+  width: auto;
+  height: 100%;
+  box-shadow: 0px 0px 1em rgba(0, 0, 0, 0.1);
+}
